@@ -5,7 +5,7 @@ This repository is created to archive the last assignment for FPGA Programming c
 ![alt text](documentation/identity.png)
 
 ## Main Source Code
-Click [Here.](sourcecode/AC_Remote.vhd)
+Click [Here.](source_code/AC_Remote.vhd)
 
 ## System Overview
 
