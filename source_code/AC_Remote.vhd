@@ -3,19 +3,19 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity top is
     Port ( 
-            in_temp_naik 	      : in  STD_LOGIC;		--Tombol SUHU naik
-            in_temp_turun 	    : in  STD_LOGIC;		--Tombol SUHU turun
-            in_fanspeed 	      : in  STD_LOGIC;		--Tombol KECEPATAN angin AC
-            in_fandir 		      : in  STD_LOGIC;		--Tombol ARAH angin AC
-            Timer				        : in  STD_LOGIC;		--Tombol menyalakan TIMER
-            OFF 				        : in  STD_LOGIC;		--Tombol Mematikan AC
-            RESET 				      : in  STD_LOGIC;		--Internal RESET
-            CLK 				        : in  STD_LOGIC;		--Internal CLOCK
-            out_power 		      : out  STD_LOGIC;   --POWER		 (output)
-            out_timer			      : out  integer;     --Countdown (output)
-            out_temp		 	      : out  STD_LOGIC_VECTOR (1 downto 0);	      --SUHU AC 	 (output)
-            out_fanspeed 	      : inout  STD_LOGIC_VECTOR (1 downto 0);     --KECEPATAN (output)
-            out_fandir          : inout  STD_LOGIC_VECTOR (1 downto 0));    --ARAH angin(output)
+            in_temp_naik	: in  STD_LOGIC;		--Tombol SUHU naik
+            in_temp_turun	: in  STD_LOGIC;		--Tombol SUHU turun
+            in_fanspeed		: in  STD_LOGIC;		--Tombol KECEPATAN angin AC
+            in_fandir		: in  STD_LOGIC;		--Tombol ARAH angin AC
+            Timer		: in  STD_LOGIC;		--Tombol menyalakan TIMER
+            OFF			: in  STD_LOGIC;		--Tombol Mematikan AC
+            RESET		: in  STD_LOGIC;		--Internal RESET
+            CLK			: in  STD_LOGIC;		--Internal CLOCK
+            out_power		: out  STD_LOGIC;   --POWER		 (output)
+            out_timer		: out  integer;     --Countdown (output)
+            out_temp		: out  STD_LOGIC_VECTOR (1 downto 0);	      --SUHU AC 	 (output)
+            out_fanspeed	: inout  STD_LOGIC_VECTOR (1 downto 0);     --KECEPATAN (output)
+            out_fandir		: inout  STD_LOGIC_VECTOR (1 downto 0));    --ARAH angin(output)
 end top;
 
 architecture Behavioral of top is			--Inisialisasi architecture Behavioral
@@ -39,8 +39,8 @@ architecture Behavioral of top is			--Inisialisasi architecture Behavioral
 				Ticks 			<=0;					--Mereset kembali nilai Ticks
 				tTimer 			<=0;					--Mereset kembali nilai tTimer
 				cTimer 			<=0;					--Mereset countdown
-				out_timer <= cTimer; 				--Mengeluarkan output countdown TIMER
-				out_fanspeed 	<="00";				--Mematikan kipas AC
+				out_timer 		<= cTimer; 				--Mengeluarkan output countdown TIMER
+				out_fanspeed		<="00";				--Mematikan kipas AC
 				out_fandir	 	<="00";				--Menutup daun AC
 				state_reg 		<= nopower;			--Mematikan AC
 			
@@ -49,7 +49,7 @@ architecture Behavioral of top is			--Inisialisasi architecture Behavioral
 					bTimer 			<= False;		--Mematikan TIMER
 					Ticks 			<=0;				--Mereset kembali nilai Ticks
 					tTimer 			<=0;				--Mereset kembali nilai tTimer
-					out_fanspeed 	<="00";			--Mematikan kipas AC
+					out_fanspeed 		<="00";			--Mematikan kipas AC
 					out_fandir	 	<="00";			--Menutup daun AC
 				else 
 					Ticks 	<= Ticks + 1;			--Menyimpan jalannya trigger clock, setiap 10 ns
@@ -70,17 +70,17 @@ architecture Behavioral of top is			--Inisialisasi architecture Behavioral
 				
 				if (bTimer = True and Ticks = tTimer) then   --[1/2]Bila saat TIMER berjalan dan (Ticks)
 																			--[2/2](Line 50) sama dengan tTimer (line 56)
-					bTimer_after 	<= True;			--TIMER telah selesai dijalankan
+					bTimer_after 		<= True;			--TIMER telah selesai dijalankan
 					bTimer 			<= False;		--Mematikan TIMER
 					tTimer 			<=0;				--Mereset kembali nilai tTimer
 					cTimer 			<=0;				--Mereset kembali nilai countdown
-					out_fanspeed 	<="00";			--Mematikan kipas AC
+					out_fanspeed 		<="00";			--Mematikan kipas AC
 					out_fandir	 	<="00";			--Menutup daun AC
 					state_reg 		<= nopower;		--Mematikan AC
 				else
 					if state_reg <= nopower and state_next = s2 then
 						out_fanspeed 	<="10";			--Mematikan kipas AC
-						out_fandir	 	<="10";			--Menutup daun A
+						out_fandir	<="10";			--Menutup daun A
 					end if;
 					state_reg 		<= state_next; 	--menjalankan state selanjutnya
 				end if;
